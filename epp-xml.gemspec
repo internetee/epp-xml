@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'epp-xml'
-  s.version     = '1.1.0'
+  s.version     = '1.2.0'
   s.summary     = 'Gem for generating XML for EIS EPP requests'
   s.description = 'Gem for generating valid XML for EIS Extensible Provisioning Protocol requests'
   s.author      = 'Estonian Internet Foundation'
