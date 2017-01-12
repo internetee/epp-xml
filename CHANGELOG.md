@@ -1,4 +1,4 @@
-1.2.0
+2.0.0
 * EPP XML schema "eis-1.0.xsd" replaced with "ee-1.1.xsd"
 
 1.1.0
