@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.license       = 'MIT'
   s.homepage    = 'https://github.com/internetee/epp-xml'
 
-  s.add_test_dependency 'activesupport', '~> 5.0'
+  s.add_dependency 'activesupport', '~> 5.0'
 
   s.add_runtime_dependency 'builder', '~> 3.2'
 
