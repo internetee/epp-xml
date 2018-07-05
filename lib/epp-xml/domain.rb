@@ -6,7 +6,7 @@ class EppXml
 
     XMLNS         = 'urn:ietf:params:xml:ns:epp-1.0'.freeze
 
-    XMLNS_DOMAIN  = 'https://epp.tld.ee/schema/domain-eis-1.0.xsd'.freeze
+    XMLNS_DOMAIN  = 'urn:ietf:params:xml:ns:domain-1.0'.freeze
 
     XMLNS_SECDNS  = 'urn:ietf:params:xml:ns:secDNS-1.1'.freeze
 
