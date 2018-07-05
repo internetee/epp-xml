@@ -4,7 +4,7 @@ class EppXml
   class Domain
     include ClientTransactionId
 
-    XMLNS         = 'https://epp.tld.ee/schema/epp-ee-1.0.xsd'.freeze
+    XMLNS         = 'urn:ietf:params:xml:ns:epp-1.0'.freeze
 
     XMLNS_DOMAIN  = 'https://epp.tld.ee/schema/domain-eis-1.0.xsd'.freeze
 
