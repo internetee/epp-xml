@@ -3,6 +3,7 @@ require 'builder'
 require 'epp-xml/session'
 require 'epp-xml/domain'
 require 'epp-xml/contact'
+require 'epp-xml/dns' 
 require 'epp-xml/keyrelay'
 require 'client_transaction_id'
 
@@ -24,6 +25,7 @@ class EppXml
   def keyrelay
     @cached_keyrelay ||= EppXml::Keyrelay.new(cl_trid: cl_trid, cl_trid_prefix: cl_trid_prefix)
   end
+
 
   class << self
     def generate_xml_from_hash(xml_params, xml, ns = '')
