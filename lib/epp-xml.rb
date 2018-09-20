@@ -4,6 +4,7 @@ require 'epp-xml/session'
 require 'epp-xml/domain'
 require 'epp-xml/contact'
 require 'epp-xml/dns' 
+require 'epp-xml/poll'
 require 'epp-xml/keyrelay'
 require 'client_transaction_id'
 
