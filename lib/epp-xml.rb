@@ -58,11 +58,10 @@ class EppXml
       end
     end
 
-    def custom_ext(xml, custom_params)
+    def custom_ext(xml, custom_params, ns = 'command-ext:')
       xml.extension do
-        xml.tag!('eis:extdata',
-          'xmlns:eis' => 'https://epp.tld.ee/schema/eis-1.0.xsd') do
-          EppXml.generate_xml_from_hash(custom_params, xml, 'eis:')
+        xml.tag!('command-ext:command-ext') do
+          EppXml.generate_xml_from_hash(custom_params, xml, ns)
         end if custom_params.any?
       end if custom_params.any?
     end

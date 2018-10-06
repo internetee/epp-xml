@@ -10,7 +10,9 @@ class EppXml
 
     XMLNS_SECDNS  = 'urn:ietf:params:xml:ns:secDNS-1.1'.freeze
 
-    XMLNS_EIS     = 'https://epp.tld.ee/schema/eis-1.0.xsd'.freeze
+    XMLNS_COMMAND_EXT_DOMAIN     = 'http://www.metaregistrar.com/epp/command-ext-domain-1.0'.freeze
+
+    XMLNS_COMMAND_EXT = 'http://www.metaregistrar.com/epp/command-ext-1.0'.freeze
 
     def info(xml_params = {}, custom_params = {})
       build('info', xml_params, custom_params)
@@ -41,9 +43,8 @@ class EppXml
               EppXml.generate_xml_from_hash(dnssec_params, xml, 'secDNS:')
             end if dnssec_params.any?
 
-            xml.tag!('eis:extdata',
-              'xmlns:eis' => XMLNS_EIS) do
-              EppXml.generate_xml_from_hash(custom_params, xml, 'eis:')
+            xml.tag!('command-ext-domain') do
+              EppXml.generate_xml_from_hash(custom_params, xml, 'command-ext-domain:')
             end if custom_params.any?
           end if dnssec_params.any? || custom_params.any?
 
@@ -84,15 +85,14 @@ class EppXml
       xml = Builder::XmlMarkup.new
 
       xml.instruct!(:xml, standalone: 'no')
-      xml.epp('xmlns' => XMLNS) do
+      xml.epp('xmlns' => XMLNS, 'xmlns:domain' => XMLNS_DOMAIN, 'xmlns:command-ext-domain' => XMLNS_COMMAND_EXT_DOMAIN, 'xmlns:command-ext' => XMLNS_COMMAND_EXT ) do
         xml.command do
           xml.transfer('op' => op) do
             xml.tag!('domain:transfer', 'xmlns:domain' => XMLNS_DOMAIN) do
               EppXml.generate_xml_from_hash(xml_params, xml, 'domain:')
             end
           end
-
-          EppXml.custom_ext(xml, custom_params)
+          EppXml.custom_ext(xml, { domain: custom_params }, 'command-ext-domain:')
           xml.clTRID(clTRID) if clTRID
         end
       end
