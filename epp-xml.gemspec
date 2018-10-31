@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'epp-xml'
-  s.version     = '1.1.0'
+  s.version     = '1.1.1'
   s.summary     = 'Gem for generating XML for EIS EPP requests'
   s.description = 'Gem for generating valid XML for EIS Extensible Provisioning Protocol requests'
   s.author      = 'Estonian Internet Foundation'
@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.license       = 'MIT'
   s.homepage    = 'https://github.com/internetee/epp-xml'
 
-  s.add_dependency 'activesupport', '~> 4.1'
+  s.add_dependency 'activesupport', '~> 5.0'
 
   s.add_runtime_dependency 'builder', '~> 3.2'
 
