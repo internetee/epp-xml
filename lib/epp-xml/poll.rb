@@ -7,9 +7,9 @@ class EppXml
     XMLNS = "urn:ietf:params:xml:ns:epp-1.0".freeze
 
     def req(xml_params = {}, custom_params = {})
-      build('poll')
+      build('req')
     end
-    
+
     def ack(msg_id)
       build('ack', msgID: msg_id)
     end
