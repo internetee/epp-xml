@@ -25,8 +25,8 @@ describe EppXml::Keyrelay do
                <ext:relative>P1M13D</ext:relative>
             </ext:expiry>
           </ext:keyrelay>
-          <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
-            <eis:legalDocument type="ddoc">base64</eis:legalDocument>
+          <eis:extdata xmlns:eis="https://epp.tld.ee/schema/ee-1.1.xsd">
+            <eis:legalDocument type="bdoc">base64</eis:legalDocument>
           </eis:extdata>
           <ext:clTRID>ABC-12345</ext:clTRID>
         </command>
@@ -49,7 +49,7 @@ describe EppXml::Keyrelay do
       }
     }, {
       _anonymus: [
-        legalDocument: { value: 'base64', attrs: { type: 'ddoc' } }
+        legalDocument: { value: 'base64', attrs: { type: 'bdoc' } }
       ]
     })
 

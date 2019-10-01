@@ -21,7 +21,7 @@ describe EppXml::Session do
               <objURI>urn:ietf:params:xml:ns:keyrelay-1.0</objURI>
               <svcExtension>
                 <extURI>urn:ietf:params:xml:ns:secDNS-1.1</extURI>
-                <extURI>https://epp.tld.ee/schema/eis-1.0.xsd</extURI>
+                <extURI>https://epp.tld.ee/schema/ee-1.1.xsd</extURI>
               </svcExtension>
             </svcs>
           </login>
@@ -53,7 +53,7 @@ describe EppXml::Session do
               <objURI>urn:ietf:params:xml:ns:keyrelay-1.0</objURI>
               <svcExtension>
                 <extURI>urn:ietf:params:xml:ns:secDNS-1.1</extURI>
-                <extURI>https://epp.tld.ee/schema/eis-1.0.xsd</extURI>
+                <extURI>https://epp.tld.ee/schema/ee-1.1.xsd</extURI>
               </svcExtension>
             </svcs>
           </login>
@@ -113,8 +113,8 @@ describe EppXml::Session do
           <poll op="ack" msgID="12345" />
 
           <extension>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
-              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
+            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/ee-1.1.xsd">
+              <eis:legalDocument type="bdoc">base64</eis:legalDocument>
             </eis:extdata>
           </extension>
           <clTRID>ABC-12345</clTRID>
@@ -128,7 +128,7 @@ describe EppXml::Session do
       }
     }, {
       _anonymus: [
-        legalDocument: { value: 'base64', attrs: { type: 'ddoc' } }
+        legalDocument: { value: 'base64', attrs: { type: 'bdoc' } }
       ]
     })
 

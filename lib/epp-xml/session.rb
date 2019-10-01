@@ -22,7 +22,7 @@ class EppXml
           ],
           svcExtension: [
             { extURI: { value: 'urn:ietf:params:xml:ns:secDNS-1.1' } },
-            { extURI: { value: 'https://epp.tld.ee/schema/eis-1.0.xsd' } }
+            { extURI: { value: 'https://epp.tld.ee/schema/ee-1.1.xsd' } }
           ]
         }
       }
