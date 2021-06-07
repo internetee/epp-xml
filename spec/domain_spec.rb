@@ -586,7 +586,7 @@ describe EppXml::Domain do
         <command>
           <delete>
             <domain:delete
-             xmlns:domain="https://epp.tld.ee/schema/domain-ee-1.1.xsd" />
+             xmlns:domain="https://epp.tld.ee/schema/domain-ee-1.1.xsd" verified="no" />
           </delete>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -596,12 +596,13 @@ describe EppXml::Domain do
     generated = Nokogiri::XML(epp_xml.domain.delete).to_s.squish
     expect(generated).to eq(expected)
 
+
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
       <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
         <command>
           <delete>
             <domain:delete
-             xmlns:domain="https://epp.tld.ee/schema/domain-ee-1.1.xsd">
+             xmlns:domain="https://epp.tld.ee/schema/domain-ee-1.1.xsd" verified="no">
               <domain:name>one.ee</domain:name>
             </domain:delete>
           </delete>
@@ -614,7 +615,7 @@ describe EppXml::Domain do
           <clTRID>ABC-12345</clTRID>
         </command>
       </epp>
-    ').to_s.squish
+	').to_s.squish
 
     xml = epp_xml.domain.delete({
       name: { value: 'one.ee' }
