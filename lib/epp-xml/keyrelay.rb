@@ -11,7 +11,7 @@ class EppXml
       xml.epp(
         'xmlns' => 'https://epp.tld.ee/schema/epp-ee-1.0.xsd',
         'xmlns:secDNS' => 'urn:ietf:params:xml:ns:secDNS-1.1',
-        'xmlns:domain' => 'https://epp.tld.ee/schema/domain-eis-1.0.xsd',
+        'xmlns:domain' => 'https://epp.tld.ee/schema/domain-ee-1.1.xsd',
         'xmlns:ext' => 'urn:ietf:params:xml:ns:keyrelay-1.0'
       ) do
         xml.tag!('command') do

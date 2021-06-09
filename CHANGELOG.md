@@ -5,6 +5,9 @@
 1.0.5
 * lib/epp-xml/domain.rb : all tag strings moved to class constants
 
+2.0.0
+* EPP XML schema "eis-1.0.xsd" replaced with "ee-1.1.xsd"
+
 * lib/epp-xml/domain.rb (delete method):
   - added extra argument for 'delete' action verification
   - deleted usage of 'build' method
