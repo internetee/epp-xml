@@ -15,7 +15,7 @@ class EppXml
         },
         svcs: {
           _objURIs: [
-            { objURI: { value: 'https://epp.tld.ee/schema/domain-eis-1.0.xsd' } },
+            { objURI: { value: 'https://epp.tld.ee/schema/domain-ee-1.1.xsd' } },
             { objURI: { value: 'https://epp.tld.ee/schema/contact-ee-1.1.xsd' } },
             { objURI: { value: 'urn:ietf:params:xml:ns:host-1.0' } },
             { objURI: { value: 'urn:ietf:params:xml:ns:keyrelay-1.0' } }
