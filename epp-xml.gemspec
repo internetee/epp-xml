@@ -16,6 +16,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'builder', '~> 3.2'
 
   s.add_development_dependency 'rspec', '~> 3.1'
+  s.add_development_dependency 'fuubar'
+  s.add_development_dependency 'pry'
   s.add_development_dependency 'nokogiri', '~> 1.6'
 
   s.required_ruby_version = '~> 2.2'
