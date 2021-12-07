@@ -5,11 +5,11 @@ describe EppXml::Contact do
 
   it 'generates valid check xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <check>
             <contact:check
-             xmlns:contact="https://epp.tld.ee/schema/contact-ee-1.1.xsd" />
+             xmlns:contact="urn:ietf:params:xml:ns:contact-1.0" />
           </check>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -20,11 +20,11 @@ describe EppXml::Contact do
     expect(generated).to eq(expected)
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <check>
             <contact:check
-             xmlns:contact="https://epp.tld.ee/schema/contact-ee-1.1.xsd">
+             xmlns:contact="urn:ietf:params:xml:ns:contact-1.0">
               <contact:id>sh8013</contact:id>
               <contact:id>sah8013</contact:id>
               <contact:id>8013sah</contact:id>
@@ -32,9 +32,9 @@ describe EppXml::Contact do
           </check>
 
           <extension>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
-              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
-            </eis:extdata>
+            <command-ext:command-ext>
+              <command-ext:legalDocument type="ddoc">base64</command-ext:legalDocument>
+            </command-ext:command-ext>
           </extension>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -59,11 +59,11 @@ describe EppXml::Contact do
 
   it 'generates valid check xml without clTRID' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <check>
             <contact:check
-             xmlns:contact="https://epp.tld.ee/schema/contact-ee-1.1.xsd" />
+             xmlns:contact="urn:ietf:params:xml:ns:contact-1.0" />
           </check>
         </command>
       </epp>
@@ -76,11 +76,11 @@ describe EppXml::Contact do
 
   it 'generates valid info xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <info>
             <contact:info
-             xmlns:contact="https://epp.tld.ee/schema/contact-ee-1.1.xsd" />
+             xmlns:contact="urn:ietf:params:xml:ns:contact-1.0" />
           </info>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -91,11 +91,11 @@ describe EppXml::Contact do
     expect(generated).to eq(expected)
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <info>
             <contact:info
-             xmlns:contact="https://epp.tld.ee/schema/contact-ee-1.1.xsd">
+             xmlns:contact="urn:ietf:params:xml:ns:contact-1.0">
               <contact:id>sh8013</contact:id>
               <contact:authInfo>
                 <contact:pw>2fooBAR</contact:pw>
@@ -120,11 +120,11 @@ describe EppXml::Contact do
 
   it 'generates valid transfer xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <transfer op="query">
             <contact:transfer
-             xmlns:contact="https://epp.tld.ee/schema/contact-ee-1.1.xsd" />
+             xmlns:contact="urn:ietf:params:xml:ns:contact-1.0" />
           </transfer>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -135,11 +135,11 @@ describe EppXml::Contact do
     expect(generated).to eq(expected)
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <transfer op="query">
             <contact:transfer
-             xmlns:contact="https://epp.tld.ee/schema/contact-ee-1.1.xsd">
+             xmlns:contact="urn:ietf:params:xml:ns:contact-1.0">
               <contact:id>sh8013</contact:id>
               <contact:authInfo>
                 <contact:pw>2fooBAR</contact:pw>
@@ -148,9 +148,9 @@ describe EppXml::Contact do
           </transfer>
 
           <extension>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
-              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
-            </eis:extdata>
+            <command-ext:command-ext>
+              <command-ext:legalDocument type="ddoc">base64</command-ext:legalDocument>
+            </command-ext:command-ext>
           </extension>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -174,11 +174,11 @@ describe EppXml::Contact do
 
   it 'generates valid create xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <create>
             <contact:create
-             xmlns:contact="https://epp.tld.ee/schema/contact-ee-1.1.xsd" />
+             xmlns:contact="urn:ietf:params:xml:ns:contact-1.0" />
           </create>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -191,11 +191,11 @@ describe EppXml::Contact do
     ###
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <create>
             <contact:create
-             xmlns:contact="https://epp.tld.ee/schema/contact-ee-1.1.xsd">
+             xmlns:contact="urn:ietf:params:xml:ns:contact-1.0">
               <contact:id>sh8013</contact:id>
               <contact:postalInfo type="int">
                 <contact:name>John Doe</contact:name>
@@ -258,11 +258,11 @@ describe EppXml::Contact do
 
   it 'generates valid delete xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <delete>
             <contact:delete
-             xmlns:contact="https://epp.tld.ee/schema/contact-ee-1.1.xsd" />
+             xmlns:contact="urn:ietf:params:xml:ns:contact-1.0" />
           </delete>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -273,11 +273,11 @@ describe EppXml::Contact do
     expect(generated).to eq(expected)
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <delete>
             <contact:delete
-             xmlns:contact="https://epp.tld.ee/schema/contact-ee-1.1.xsd">
+             xmlns:contact="urn:ietf:params:xml:ns:contact-1.0">
               <contact:id>sh8013</contact:id>
             </contact:delete>
           </delete>
@@ -296,11 +296,11 @@ describe EppXml::Contact do
 
   it 'generates valid update xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <update>
             <contact:update
-             xmlns:contact="https://epp.tld.ee/schema/contact-ee-1.1.xsd" />
+             xmlns:contact="urn:ietf:params:xml:ns:contact-1.0" />
           </update>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -311,11 +311,11 @@ describe EppXml::Contact do
     expect(generated).to eq(expected)
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <update>
             <contact:update
-             xmlns:contact="https://epp.tld.ee/schema/contact-ee-1.1.xsd">
+             xmlns:contact="urn:ietf:params:xml:ns:contact-1.0">
               <contact:id>sh8013</contact:id>
               <contact:add>
                 <contact:status s="clientDeleteProhibited"/>

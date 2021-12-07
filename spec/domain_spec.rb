@@ -5,11 +5,11 @@ describe EppXml::Domain do
 
   it 'generates valid create xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <create>
             <domain:create
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd" />
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0" />
           </create>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -22,11 +22,11 @@ describe EppXml::Domain do
     ###
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <create>
             <domain:create
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
               <domain:name>one.ee</domain:name>
               <domain:period unit="d">345</domain:period>
               <domain:ns>
@@ -65,11 +65,11 @@ describe EppXml::Domain do
     ###
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <create>
             <domain:create
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
               <domain:name>one.ee</domain:name>
             </domain:create>
           </create>
@@ -92,11 +92,11 @@ describe EppXml::Domain do
     ###
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <create>
             <domain:create
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
               <domain:name>one.ee</domain:name>
               <domain:period unit="d">345</domain:period>
               <domain:ns>
@@ -183,11 +183,11 @@ describe EppXml::Domain do
 
   it 'generates create with custom extension' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <create>
             <domain:create
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
               <domain:name>one.ee</domain:name>
               <domain:period unit="d">345</domain:period>
               <domain:ns>
@@ -206,10 +206,11 @@ describe EppXml::Domain do
               <domain:contact type="tech">345xxv</domain:contact>
             </domain:create>
           </create>
+
           <extension>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
-              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
-            </eis:extdata>
+            <command-ext-domain>
+              <command-ext-domain:legalDocument type="ddoc">base64</command-ext-domain:legalDocument>
+            </command-ext-domain>
           </extension>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -251,11 +252,11 @@ describe EppXml::Domain do
 
   it 'generates valid info xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <info>
             <domain:info
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd" />
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0" />
           </info>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -267,11 +268,11 @@ describe EppXml::Domain do
     expect(generated).to eq(expected)
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <info>
             <domain:info
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
               <domain:name hosts="sub">one.ee</domain:name>
               <domain:authInfo>
                 <domain:pw>b3rafsla</domain:pw>
@@ -296,11 +297,11 @@ describe EppXml::Domain do
 
   it 'generates valid check xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <check>
             <domain:check
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd" />
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0" />
           </check>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -311,11 +312,11 @@ describe EppXml::Domain do
     expect(generated).to eq(expected)
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <check>
             <domain:check
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
               <domain:name>example.ee</domain:name>
               <domain:name>example2.ee</domain:name>
               <domain:name>example3.ee</domain:name>
@@ -341,11 +342,11 @@ describe EppXml::Domain do
   it 'generates valid update xml' do
     # Detailed update
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <update>
             <domain:update
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
               <domain:name>example.ee</domain:name>
               <domain:add>
                 <domain:ns>
@@ -404,11 +405,11 @@ describe EppXml::Domain do
     # Update with NS IP-s
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <update>
             <domain:update
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
               <domain:name>one.ee</domain:name>
               <domain:add>
                 <domain:contact type="admin">sh8013</domain:contact>
@@ -465,11 +466,11 @@ describe EppXml::Domain do
     ## Update with chg
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <update>
             <domain:update
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
               <domain:name>example.ee</domain:name>
               <domain:chg>
                 <domain:registrant>mak21</domain:registrant>
@@ -493,10 +494,10 @@ describe EppXml::Domain do
     ## Update extension
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <update>
-            <domain:update xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+            <domain:update xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
               <domain:name>example.ee</domain:name>
             </domain:update>
           </update>
@@ -529,7 +530,7 @@ describe EppXml::Domain do
                 </secDNS:dsData>
               </secDNS:add>
             </secDNS:update>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
+            <eis:extdata xmlns:eis="urn:ietf:params:xml:ns:eis-1.1">
               <eis:legalDocument type="ddoc">base64</eis:legalDocument>
             </eis:extdata>
           </extension>
@@ -577,16 +578,15 @@ describe EppXml::Domain do
 
     generated = Nokogiri::XML(xml).to_s.squish
     expect(generated).to eq(expected)
-
   end
 
   it 'generates valid delete xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <delete>
             <domain:delete
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd" />
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0" verified="no"/>
           </delete>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -597,19 +597,19 @@ describe EppXml::Domain do
     expect(generated).to eq(expected)
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <delete>
             <domain:delete
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0" verified="no">
               <domain:name>one.ee</domain:name>
             </domain:delete>
           </delete>
 
           <extension>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
-              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
-            </eis:extdata>
+            <command-ext:command-ext>
+              <command-ext:legalDocument type="ddoc">base64</command-ext:legalDocument>
+            </command-ext:command-ext>
           </extension>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -630,11 +630,11 @@ describe EppXml::Domain do
 
   it 'generates valid renew xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <renew>
             <domain:renew
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd" />
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0" />
           </renew>
           <clTRID>ABC-12345</clTRID>
         </command>
@@ -645,11 +645,11 @@ describe EppXml::Domain do
     expect(generated).to eq(expected)
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
         <command>
           <renew>
             <domain:renew
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+             xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
               <domain:name>one.ee</domain:name>
               <domain:curExpDate>2009-11-15</domain:curExpDate>
               <domain:period unit="d">365</domain:period>
@@ -672,12 +672,19 @@ describe EppXml::Domain do
 
   it 'generates valid transfer xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0"
+        xmlns:domain="urn:ietf:params:xml:ns:domain-1.0"
+        xmlns:command-ext-domain="http://www.metaregistrar.com/epp/command-ext-domain-1.0" xmlns:command-ext="http://www.metaregistrar.com/epp/command-ext-1.0">
+
         <command>
           <transfer op="query">
-            <domain:transfer
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd" />
+            <domain:transfer xmlns:domain="urn:ietf:params:xml:ns:domain-1.0"/>
           </transfer>
+          <extension>
+            <command-ext:command-ext>
+              <command-ext-domain:domain/>
+            </command-ext:command-ext>
+          </extension>
           <clTRID>ABC-12345</clTRID>
         </command>
       </epp>
@@ -687,17 +694,21 @@ describe EppXml::Domain do
     expect(generated).to eq(expected)
 
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+      <epp xmlns="urn:ietf:params:xml:ns:epp-1.0" xmlns:domain="urn:ietf:params:xml:ns:domain-1.0" xmlns:command-ext-domain="http://www.metaregistrar.com/epp/command-ext-domain-1.0" xmlns:command-ext="http://www.metaregistrar.com/epp/command-ext-1.0">
         <command>
           <transfer op="approve">
-            <domain:transfer
-             xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+            <domain:transfer xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
               <domain:name>one.ee</domain:name>
               <domain:authInfo>
                 <domain:pw roid="askdf">test</domain:pw>
               </domain:authInfo>
             </domain:transfer>
           </transfer>
+          <extension>
+            <command-ext:command-ext>
+              <command-ext-domain:domain/>
+            </command-ext:command-ext>
+          </extension>
           <clTRID>ABC-12345</clTRID>
         </command>
       </epp>

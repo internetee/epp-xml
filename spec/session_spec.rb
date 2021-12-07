@@ -113,9 +113,9 @@ describe EppXml::Session do
           <poll op="ack" msgID="12345" />
 
           <extension>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
-              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
-            </eis:extdata>
+            <command-ext:command-ext>
+              <command-ext:legalDocument type="ddoc">base64</command-ext:legalDocument>
+            </command-ext:command-ext>
           </extension>
           <clTRID>ABC-12345</clTRID>
         </command>

@@ -10,6 +10,8 @@ class EppXml
 
     XMLNS_SECDNS  = 'urn:ietf:params:xml:ns:secDNS-1.1'.freeze
 
+    XMLNS_EIS     = 'urn:ietf:params:xml:ns:eis-1.1'.freeze
+
     XMLNS_COMMAND_EXT_DOMAIN     = 'http://www.metaregistrar.com/epp/command-ext-domain-1.0'.freeze
 
     XMLNS_COMMAND_EXT = 'http://www.metaregistrar.com/epp/command-ext-1.0'.freeze
