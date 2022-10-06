@@ -34,7 +34,7 @@ class EppXml
       xml.epp('xmlns' => 'https://epp.tld.ee/schema/epp-ee-1.0.xsd') do
         xml.command do
           xml.transfer('op' => op) do
-            xml.tag!('contact:transfer', 'xmlns:contact' => generate_path) do
+            xml.tag!('contact:transfer', 'xmlns:contact' =>  "https://epp.tld.ee/schema/contact-ee-1.1.xsd") do
               EppXml.generate_xml_from_hash(xml_params, xml, 'contact:')
             end
           end
@@ -54,7 +54,7 @@ class EppXml
       xml.epp('xmlns' => 'https://epp.tld.ee/schema/epp-ee-1.0.xsd') do
         xml.command do
           xml.tag!(command) do
-            xml.tag!("contact:#{command}", 'xmlns:contact' => generate_path) do
+            xml.tag!("contact:#{command}", 'xmlns:contact' =>  "https://epp.tld.ee/schema/contact-ee-1.1.xsd") do
               EppXml.generate_xml_from_hash(xml_params, xml, 'contact:')
             end
           end

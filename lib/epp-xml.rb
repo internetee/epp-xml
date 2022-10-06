@@ -18,9 +18,7 @@ class EppXml
 
   def contact
     @cached_contact ||= EppXml::Contact.new(cl_trid: cl_trid,
-                                            cl_trid_prefix: cl_trid_prefix,
-                                            schema_version: schema_version,
-                                            schema_prefix: schema_prefix)
+                                            cl_trid_prefix: cl_trid_prefix)
   end
 
   def session
