@@ -32,8 +32,8 @@ describe EppXml::Contact do
           </check>
 
           <extension>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
-              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
+            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/ee-1.1.xsd">
+              <eis:legalDocument type="bdoc">base64</eis:legalDocument>
             </eis:extdata>
           </extension>
           <clTRID>ABC-12345</clTRID>
@@ -49,7 +49,7 @@ describe EppXml::Contact do
                                   ]
                                 }, {
                                   _anonymus: [
-                                    legalDocument: { value: 'base64', attrs: { type: 'ddoc' } }
+                                    legalDocument: { value: 'base64', attrs: { type: 'bdoc' } }
                                   ]
                                 })
 
@@ -148,8 +148,8 @@ describe EppXml::Contact do
           </transfer>
 
           <extension>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
-              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
+            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/ee-1.1.xsd">
+              <eis:legalDocument type="bdoc">base64</eis:legalDocument>
             </eis:extdata>
           </extension>
           <clTRID>ABC-12345</clTRID>
@@ -164,7 +164,7 @@ describe EppXml::Contact do
                                      }
                                    }, 'query', {
                                      _anonymus: [
-                                       legalDocument: { value: 'base64', attrs: { type: 'ddoc' } }
+                                       legalDocument: { value: 'base64', attrs: { type: 'bdoc' } }
                                      ]
                                    })
 

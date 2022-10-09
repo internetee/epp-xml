@@ -1,3 +1,6 @@
+2.0.0
+* EPP XML schema "eis-1.0.xsd" replaced with "ee-1.1.xsd"
+
 1.2.0
 * lib/epp-xml/epp-xml.rb
   - added additional attributes to set prefix and version of schema

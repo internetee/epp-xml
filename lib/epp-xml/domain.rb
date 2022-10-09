@@ -11,7 +11,7 @@ class EppXml
 
     XMLNS_SECDNS  = 'urn:ietf:params:xml:ns:secDNS-1.1'.freeze
 
-    XMLNS_EIS     = 'https://epp.tld.ee/schema/eis-1.0.xsd'.freeze
+    XMLNS_EIS     = 'https://epp.tld.ee/schema/ee-1.1.xsd'.freeze
 
     def info(xml_params = {}, custom_params = {})
       build('info', xml_params, custom_params)
