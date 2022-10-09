@@ -1,6 +1,10 @@
 2.0.0
 * EPP XML schema "eis-1.0.xsd" replaced with "ee-1.1.xsd"
 
+1.2.0
+* lib/epp-xml/epp-xml.rb
+  - added additional attributes to set prefix and version of schema
+
 1.1.0
 * EPP XML schema namespace "urn:ietf:params:xml:ns:epp-1.0" replaced with "https://epp.tld.ee/schema/epp-ee-1.0.xsd"
 * EPP XML schema contact-eis-1.0 replaced with contact-ee-1.1

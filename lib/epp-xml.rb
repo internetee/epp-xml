@@ -10,11 +10,17 @@ class EppXml
   include ClientTransactionId
 
   def domain
-    @cached_domain ||= EppXml::Domain.new(cl_trid: cl_trid, cl_trid_prefix: cl_trid_prefix)
+    @cached_domain ||= EppXml::Domain.new(cl_trid: cl_trid,
+                                          cl_trid_prefix: cl_trid_prefix,
+                                          schema_version: schema_version,
+                                          schema_prefix: schema_prefix)
   end
 
   def contact
-    @cached_contact ||= EppXml::Contact.new(cl_trid: cl_trid, cl_trid_prefix: cl_trid_prefix)
+    @cached_contact ||= EppXml::Contact.new(cl_trid: cl_trid,
+                                            cl_trid_prefix: cl_trid_prefix,
+                                            schema_version: schema_version,
+                                            schema_prefix: schema_prefix)
   end
 
   def session
@@ -56,12 +62,16 @@ class EppXml
     end
 
     def custom_ext(xml, custom_params)
-      xml.extension do
-        xml.tag!('eis:extdata',
-          'xmlns:eis' => 'https://epp.tld.ee/schema/ee-1.1.xsd') do
-          EppXml.generate_xml_from_hash(custom_params, xml, 'eis:')
-        end if custom_params.any?
-      end if custom_params.any?
+      if custom_params.any?
+        xml.extension do
+          if custom_params.any?
+            xml.tag!('eis:extdata',
+                     'xmlns:eis' => 'https://epp.tld.ee/schema/ee-1.1.xsd') do
+              EppXml.generate_xml_from_hash(custom_params, xml, 'eis:')
+            end
+          end
+        end
+      end
     end
   end
 end

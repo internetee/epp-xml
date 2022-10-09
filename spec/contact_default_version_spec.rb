@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe EppXml::Contact do
-  let(:epp_xml) { EppXml.new(cl_trid: 'ABC-12345', schema_version: '1.1', schema_prefix: 'contact-ee') }
+  let(:epp_xml) { EppXml.new(cl_trid: 'ABC-12345')}
 
   it 'generates valid check xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -32,8 +32,8 @@ describe EppXml::Contact do
           </check>
 
           <extension>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/ee-1.1.xsd">
-              <eis:legalDocument type="bdoc">base64</eis:legalDocument>
+            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
+              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
             </eis:extdata>
           </extension>
           <clTRID>ABC-12345</clTRID>
@@ -42,16 +42,16 @@ describe EppXml::Contact do
     ').to_s.squish
 
     xml = epp_xml.contact.check({
-                                  _anonymus: [
-                                    { id: { value: 'sh8013' } },
-                                    { id: { value: 'sah8013' } },
-                                    { id: { value: '8013sah' } }
-                                  ]
-                                }, {
-                                  _anonymus: [
-                                    legalDocument: { value: 'base64', attrs: { type: 'bdoc' } }
-                                  ]
-                                })
+      _anonymus: [
+        { id: { value: 'sh8013' } },
+        { id: { value: 'sah8013' } },
+        { id: { value: '8013sah' } }
+      ]
+    }, {
+      _anonymus: [
+        legalDocument: { value: 'base64', attrs: { type: 'ddoc' } }
+      ]
+    })
 
     generated = Nokogiri::XML(xml).to_s.squish
     expect(generated).to eq(expected)
@@ -108,11 +108,11 @@ describe EppXml::Contact do
     ').to_s.squish
 
     xml = epp_xml.contact.info({
-                                 id: { value: 'sh8013' },
-                                 authInfo: {
-                                   pw: { value: '2fooBAR' }
-                                 }
-                               })
+      id: { value: 'sh8013' },
+      authInfo: {
+        pw: { value: '2fooBAR' }
+      }
+    })
 
     generated = Nokogiri::XML(xml).to_s.squish
     expect(generated).to eq(expected)
@@ -148,8 +148,8 @@ describe EppXml::Contact do
           </transfer>
 
           <extension>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/ee-1.1.xsd">
-              <eis:legalDocument type="bdoc">base64</eis:legalDocument>
+            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
+              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
             </eis:extdata>
           </extension>
           <clTRID>ABC-12345</clTRID>
@@ -158,15 +158,15 @@ describe EppXml::Contact do
     ').to_s.squish
 
     xml = epp_xml.contact.transfer({
-                                     id: { value: 'sh8013' },
-                                     authInfo: {
-                                       pw: { value: '2fooBAR' }
-                                     }
-                                   }, 'query', {
-                                     _anonymus: [
-                                       legalDocument: { value: 'base64', attrs: { type: 'bdoc' } }
-                                     ]
-                                   })
+      id: { value: 'sh8013' },
+      authInfo: {
+        pw: { value: '2fooBAR' }
+      }
+    }, 'query', {
+      _anonymus: [
+        legalDocument: { value: 'base64', attrs: { type: 'ddoc' } }
+      ]
+    })
 
     generated = Nokogiri::XML(xml).to_s.squish
     expect(generated).to eq(expected)
@@ -227,30 +227,30 @@ describe EppXml::Contact do
     ').to_s.squish
 
     xml = epp_xml.contact.create({
-                                   id: { value: 'sh8013' },
-                                   postalInfo: { value: {
-                                     name: { value: 'John Doe' },
-                                     org: { value: 'Example Inc.' },
-                                     addr: [
-                                       { street: { value: '123 Example Dr.' } },
-                                       { street: { value: 'Suite 100' } },
-                                       { city: { value: 'Dulles' } },
-                                       { sp: { value: 'VA' } },
-                                       { pc: { value: '20166-6503' } },
-                                       { cc: { value: 'US' } }
-                                     ]
-                                   }, attrs: { type: 'int' } },
-                                   voice: { value: '+1.7035555555', attrs: { x: '1234' } },
-                                   fax: { value: '+1.7035555556' },
-                                   email: { value: 'jdoe@example.com' },
-                                   authInfo: {
-                                     pw: { value: '2fooBAR' }
-                                   },
-                                   disclose: { value: {
-                                     voice: { value: '' },
-                                     email: { value: '' }
-                                   }, attrs: { flag: '0' } }
-                                 })
+      id: { value: 'sh8013' },
+      postalInfo: { value: {
+        name: { value: 'John Doe' },
+        org: { value: 'Example Inc.' },
+        addr: [
+          { street: { value: '123 Example Dr.' } },
+          { street: { value: 'Suite 100' } },
+          { city: { value: 'Dulles' } },
+          { sp: { value: 'VA' } },
+          { pc: { value: '20166-6503' } },
+          { cc: { value: 'US' } }
+        ]
+      }, attrs: { type: 'int' } },
+      voice: { value: '+1.7035555555', attrs: { x: '1234' } },
+      fax: { value: '+1.7035555556' },
+      email: { value: 'jdoe@example.com' },
+      authInfo: {
+        pw: { value: '2fooBAR' }
+      },
+      disclose: { value: {
+        voice: { value: '' },
+        email: { value: '' }
+      }, attrs: { flag: '0' } }
+    })
 
     generated = Nokogiri::XML(xml).to_s.squish
     expect(generated).to eq(expected)
@@ -287,8 +287,8 @@ describe EppXml::Contact do
     ').to_s.squish
 
     xml = epp_xml.contact.delete({
-                                   id: { value: 'sh8013' }
-                                 })
+      id: { value: 'sh8013' }
+    })
 
     generated = Nokogiri::XML(xml).to_s.squish
     expect(generated).to eq(expected)
@@ -350,35 +350,35 @@ describe EppXml::Contact do
     ').to_s.squish
 
     xml = epp_xml.contact.update({
-                                   id: { value: 'sh8013' },
-                                   add: [
-                                     { status: { value: '', attrs: { s: 'clientDeleteProhibited' } } }
-                                   ],
-                                   chg: [
-                                     {
-                                       postalInfo: { value: {
-                                         org: { value: '' },
-                                         addr: [
-                                           { street: { value: '124 Example Dr.' } },
-                                           { street: { value: 'Suite 200' } },
-                                           { city: { value: 'Dulles' } },
-                                           { sp: { value: 'VA' } },
-                                           { pc: { value: '20166-6503' } },
-                                           { cc: { value: 'US' } }
-                                         ]
-                                       }, attrs: { type: 'int' } }
-                                     },
-                                     { voice: { value: '+1.7034444444' } },
-                                     { fax: { value: '' } },
-                                     { authInfo: { pw: { value: '2fooBAR' } } },
-                                     {
-                                       disclose: { value: {
-                                         voice: { value: '' },
-                                         email: { value: '' }
-                                       }, attrs: { flag: '1' } }
-                                     }
-                                   ]
-                                 })
+      id: { value: 'sh8013' },
+      add: [
+        { status: { value: '', attrs: { s: 'clientDeleteProhibited' } } }
+      ],
+      chg: [
+        {
+          postalInfo: { value: {
+            org: { value: '' },
+            addr: [
+              { street: { value: '124 Example Dr.' } },
+              { street: { value: 'Suite 200' } },
+              { city: { value: 'Dulles' } },
+              { sp: { value: 'VA' } },
+              { pc: { value: '20166-6503' } },
+              { cc: { value: 'US' } }
+            ]
+          }, attrs: { type: 'int' } }
+        },
+        { voice: { value: '+1.7034444444' } },
+        { fax: { value: ''} },
+        { authInfo: { pw: { value: '2fooBAR' } } },
+        {
+          disclose: { value: {
+            voice: { value: '' },
+            email: { value: '' }
+          }, attrs: { flag: '1' } }
+        }
+      ]
+    })
 
     generated = Nokogiri::XML(xml).to_s.squish
     expect(generated).to eq(expected)

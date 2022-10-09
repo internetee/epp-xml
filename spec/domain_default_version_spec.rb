@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe EppXml::Domain do
-  let(:epp_xml) { EppXml.new(cl_trid: 'ABC-12345', schema_version: '1.0', schema_prefix: 'domain-eis')}
+  let(:epp_xml) { EppXml.new(cl_trid: 'ABC-12345' )}
 
   it 'generates valid create xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -207,8 +207,8 @@ describe EppXml::Domain do
             </domain:create>
           </create>
           <extension>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/ee-1.1.xsd">
-              <eis:legalDocument type="bdoc">base64</eis:legalDocument>
+            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
+              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
             </eis:extdata>
           </extension>
           <clTRID>ABC-12345</clTRID>
@@ -241,7 +241,7 @@ describe EppXml::Domain do
       ]
     }, {}, {
       _anonymus: [
-        legalDocument: { value: 'base64', attrs: { type: 'bdoc' } }
+        legalDocument: { value: 'base64', attrs: { type: 'ddoc' } }
       ]
     })
 
@@ -529,8 +529,8 @@ describe EppXml::Domain do
                 </secDNS:dsData>
               </secDNS:add>
             </secDNS:update>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/ee-1.1.xsd">
-              <eis:legalDocument type="bdoc">base64</eis:legalDocument>
+            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
+              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
             </eis:extdata>
           </extension>
           <clTRID>ABC-12345</clTRID>
@@ -571,7 +571,7 @@ describe EppXml::Domain do
       ]
     }, {
       _anonymus: [
-        legalDocument: { value: 'base64', attrs: { type: 'bdoc' } }
+        legalDocument: { value: 'base64', attrs: { type: 'ddoc' } }
       ]
     })
 
@@ -607,8 +607,8 @@ describe EppXml::Domain do
           </delete>
 
           <extension>
-            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/ee-1.1.xsd">
-              <eis:legalDocument type="bdoc">base64</eis:legalDocument>
+            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
+              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
             </eis:extdata>
           </extension>
           <clTRID>ABC-12345</clTRID>
@@ -620,7 +620,7 @@ describe EppXml::Domain do
       name: { value: 'one.ee' }
     }, {
       _anonymus: [
-        legalDocument: { value: 'base64', attrs: { type: 'bdoc' } }
+        legalDocument: { value: 'base64', attrs: { type: 'ddoc' } }
       ]
     })
 

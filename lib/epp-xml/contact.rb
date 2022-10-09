@@ -4,6 +4,9 @@ class EppXml
   class Contact
     include ClientTransactionId
 
+    DEFAULT_SCHEMA_PREFIX = 'contact-ee'.freeze
+    DEFAULT_SCHEMA_VERSION = '1.1'.freeze
+
     def create(xml_params = {}, custom_params = {})
       build('create', xml_params, custom_params)
     end
@@ -31,7 +34,7 @@ class EppXml
       xml.epp('xmlns' => 'https://epp.tld.ee/schema/epp-ee-1.0.xsd') do
         xml.command do
           xml.transfer('op' => op) do
-            xml.tag!('contact:transfer', 'xmlns:contact' => 'https://epp.tld.ee/schema/contact-ee-1.1.xsd') do
+            xml.tag!('contact:transfer', 'xmlns:contact' => generate_path) do
               EppXml.generate_xml_from_hash(xml_params, xml, 'contact:')
             end
           end
@@ -51,7 +54,7 @@ class EppXml
       xml.epp('xmlns' => 'https://epp.tld.ee/schema/epp-ee-1.0.xsd') do
         xml.command do
           xml.tag!(command) do
-            xml.tag!("contact:#{command}", 'xmlns:contact' => 'https://epp.tld.ee/schema/contact-ee-1.1.xsd') do
+            xml.tag!("contact:#{command}", 'xmlns:contact' => generate_path) do
               EppXml.generate_xml_from_hash(xml_params, xml, 'contact:')
             end
           end
@@ -60,6 +63,13 @@ class EppXml
           xml.clTRID(clTRID) if clTRID
         end
       end
+    end
+
+    def generate_path
+      prefix = schema_prefix || DEFAULT_SCHEMA_PREFIX
+      version = schema_version || DEFAULT_SCHEMA_VERSION
+
+      "https://epp.tld.ee/schema/#{prefix}-#{version}.xsd"
     end
   end
 end
