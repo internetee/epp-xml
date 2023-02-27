@@ -19,6 +19,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'fuubar'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'nokogiri', '~> 1.6'
-
-  s.required_ruby_version = '~> 2.2'
 end
