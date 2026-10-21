@@ -3,6 +3,169 @@ require 'spec_helper'
 describe EppXml::Domain do
   let(:epp_xml) { EppXml.new(cl_trid: 'ABC-12345', schema_version: '1.0', schema_prefix: 'domain-eis')}
 
+  %w[create update].each do |command|
+    [true, false].each do |enabled|
+      it "generates #{command} xml with auto-renew #{enabled}" do
+        expected = Nokogiri::XML(%Q{<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+          <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+            <command>
+              <#{command}>
+                <domain:#{command} xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+                  <domain:name>example.ee</domain:name>
+                </domain:#{command}>
+              </#{command}>
+              <extension>
+                <autoRenew:#{command} xmlns:autoRenew="https://epp.tld.ee/schema/autoRenew-ee-1.0.xsd">
+                  <autoRenew:enabled>#{enabled}</autoRenew:enabled>
+                </autoRenew:#{command}>
+              </extension>
+              <clTRID>ABC-12345</clTRID>
+            </command>
+          </epp>
+        }).to_s.squish
+
+        xml = epp_xml.domain.public_send(command, { name: { value: 'example.ee' } },
+          auto_renew: { enabled: enabled })
+
+        generated = Nokogiri::XML(xml).to_s.squish
+        expect(generated).to eq(expected)
+      end
+    end
+
+    [nil, {}, { enabled: nil }].each do |auto_renew|
+      it "omits the #{command} extension for auto_renew: #{auto_renew.inspect}" do
+        expected = Nokogiri::XML(%Q{<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+          <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+            <command>
+              <#{command}>
+                <domain:#{command} xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+                  <domain:name>example.ee</domain:name>
+                </domain:#{command}>
+              </#{command}>
+              <clTRID>ABC-12345</clTRID>
+            </command>
+          </epp>
+        }).to_s.squish
+
+        xml = epp_xml.domain.public_send(command, { name: { value: 'example.ee' } },
+          auto_renew: auto_renew)
+
+        generated = Nokogiri::XML(xml).to_s.squish
+        expect(generated).to eq(expected)
+      end
+    end
+
+    it "combines secDNS, EIS and auto-renew in one #{command} extension" do
+      dnssec_xml = '<secDNS:keyData>
+        <secDNS:flags>256</secDNS:flags>
+        <secDNS:protocol>3</secDNS:protocol>
+        <secDNS:alg>8</secDNS:alg>
+        <secDNS:pubKey>ABCDEF</secDNS:pubKey>
+      </secDNS:keyData>'
+      dnssec_xml = "<secDNS:add>\n#{dnssec_xml}\n</secDNS:add>" if command == 'update'
+
+      expected = Nokogiri::XML(%Q{<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+          <command>
+            <#{command}>
+              <domain:#{command} xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+                <domain:name>example.ee</domain:name>
+              </domain:#{command}>
+            </#{command}>
+            <extension>
+              <secDNS:#{command} xmlns:secDNS="urn:ietf:params:xml:ns:secDNS-1.1">
+                #{dnssec_xml}
+              </secDNS:#{command}>
+              <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
+                <eis:legalDocument type="ddoc">base64</eis:legalDocument>
+              </eis:extdata>
+              <autoRenew:#{command} xmlns:autoRenew="https://epp.tld.ee/schema/autoRenew-ee-1.0.xsd">
+                <autoRenew:enabled>true</autoRenew:enabled>
+              </autoRenew:#{command}>
+            </extension>
+            <clTRID>ABC-12345</clTRID>
+          </command>
+        </epp>
+      }).to_s.squish
+
+      dnssec_params = {
+        keyData: {
+          flags: { value: '256' },
+          protocol: { value: '3' },
+          alg: { value: '8' },
+          pubKey: { value: 'ABCDEF' }
+        }
+      }
+      dnssec_params = { add: [dnssec_params] } if command == 'update'
+      custom_params = {
+        _anonymus: [
+          legalDocument: { value: 'base64', attrs: { type: 'ddoc' } }
+        ]
+      }
+      xml = epp_xml.domain.public_send(command, { name: { value: 'example.ee' } },
+        dnssec_params, custom_params, auto_renew: { enabled: true })
+
+      generated = Nokogiri::XML(xml).to_s.squish
+      expect(generated).to eq(expected)
+    end
+  end
+
+  it 'generates update xml reversing an auto-renew cycle' do
+    expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+        <command>
+          <update>
+            <domain:update xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+              <domain:name>example.ee</domain:name>
+            </domain:update>
+          </update>
+          <extension>
+            <autoRenew:update xmlns:autoRenew="https://epp.tld.ee/schema/autoRenew-ee-1.0.xsd">
+              <autoRenew:reverse cycleId="3f7c2a5e-0000-0000-0000-000000000000"/>
+            </autoRenew:update>
+          </extension>
+          <clTRID>ABC-12345</clTRID>
+        </command>
+      </epp>
+    ').to_s.squish
+
+    xml = epp_xml.domain.update({ name: { value: 'example.ee' } },
+      auto_renew: { reverse_cycle_id: '3f7c2a5e-0000-0000-0000-000000000000' })
+
+    generated = Nokogiri::XML(xml).to_s.squish
+    expect(generated).to eq(expected)
+  end
+
+  it 'preserves the empty secDNS update for existing custom-only callers' do
+    expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+        <command>
+          <update>
+            <domain:update xmlns:domain="https://epp.tld.ee/schema/domain-eis-1.0.xsd">
+              <domain:name>example.ee</domain:name>
+            </domain:update>
+          </update>
+          <extension>
+            <secDNS:update xmlns:secDNS="urn:ietf:params:xml:ns:secDNS-1.1"/>
+            <eis:extdata xmlns:eis="https://epp.tld.ee/schema/eis-1.0.xsd">
+              <eis:legalDocument type="ddoc">base64</eis:legalDocument>
+            </eis:extdata>
+          </extension>
+          <clTRID>ABC-12345</clTRID>
+        </command>
+      </epp>
+    ').to_s.squish
+
+    xml = epp_xml.domain.update({ name: { value: 'example.ee' } }, {}, {
+      _anonymus: [
+        legalDocument: { value: 'base64', attrs: { type: 'ddoc' } }
+      ]
+    })
+
+    generated = Nokogiri::XML(xml).to_s.squish
+    expect(generated).to eq(expected)
+  end
+
   it 'generates valid create xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
       <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">

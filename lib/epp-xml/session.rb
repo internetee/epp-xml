@@ -4,6 +4,9 @@ class EppXml
   class Session
     include ClientTransactionId
 
+    XMLNS_AUTO_RENEW = 'https://epp.tld.ee/schema/autoRenew-ee-1.0.xsd'.freeze
+    XMLNS_RGP = 'urn:ietf:params:xml:ns:rgp-1.0'.freeze
+
     def login(xml_params = {})
       defaults = {
         clID: { value: 'user' },

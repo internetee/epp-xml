@@ -1,3 +1,8 @@
+Unreleased
+* Add the optional `auto_renew:` keyword to domain create/update for preference changes and cycle reversal.
+* Compose auto-renew with secDNS and EIS in one extension; auto-renew-only updates omit secDNS.
+* Add auto-renew and RGP namespace constants and document login service-extension overrides; login defaults are unchanged.
+
 1.2.0
 * lib/epp-xml/epp-xml.rb
   - added additional attributes to set prefix and version of schema
