@@ -158,3 +158,61 @@ puts Nokogiri(xml)
 ```
 
 Some methods take multiple arguments (eg. EppXml::Domain.create), refer to tests to see more examples.
+
+### Automatic renewal
+
+`EppXml::Domain#create` and `#update` accept an optional `auto_renew:` keyword.
+The existing positional arguments remain domain parameters, DNSSEC parameters,
+and EIS custom parameters, in that order.
+
+```ruby
+epp_xml = EppXml.new(cl_trid_prefix: 'ABC')
+domain_params = { name: { value: 'example.ee' } }
+
+epp_xml.domain.create(domain_params, auto_renew: { enabled: true })
+epp_xml.domain.update(domain_params, auto_renew: { enabled: false })
+epp_xml.domain.update(domain_params, auto_renew: {
+  reverse_cycle_id: '3f7c2a5e-0000-0000-0000-000000000000'
+})
+```
+
+Pass `enabled: true` or `enabled: false` to set the preference. Omit the keyword,
+pass `auto_renew: nil`, or pass `enabled: nil` to omit the auto-renew element.
+Disabling the preference affects future renewals; to reverse a renewal during
+its grace period and request a refund, pass its cycle ID to `#update` instead.
+
+For example, disabling emits:
+
+```xml
+<extension>
+  <autoRenew:update xmlns:autoRenew="https://epp.tld.ee/schema/autoRenew-ee-1.0.xsd">
+    <autoRenew:enabled>false</autoRenew:enabled>
+  </autoRenew:update>
+</extension>
+```
+
+Reversal emits `autoRenew:reverse` with a `cycleId` attribute instead of
+`autoRenew:enabled`. When DNSSEC or EIS parameters are also supplied, their
+elements and the auto-renew element are siblings inside one `<extension>`.
+
+### Login extension URIs
+
+Login continues to announce only secDNS and EIS extensions by default. To request
+auto-renew details and RFC 3915 grace-period statuses in responses, use the existing
+login overrides:
+
+```ruby
+epp_xml.session.login(svcs: {
+  svcExtension: [
+    { extURI: { value: 'urn:ietf:params:xml:ns:secDNS-1.1' } },
+    { extURI: { value: 'https://epp.tld.ee/schema/eis-1.0.xsd' } },
+    { extURI: { value: EppXml::Session::XMLNS_AUTO_RENEW } },
+    { extURI: { value: EppXml::Session::XMLNS_RGP } }
+  ]
+})
+```
+
+Overrides are deep-merged with login defaults. The `svcExtension` array replaces
+the default array, so include the existing URIs to keep announcing them. The
+constants contain `https://epp.tld.ee/schema/autoRenew-ee-1.0.xsd` and
+`urn:ietf:params:xml:ns:rgp-1.0`, respectively.

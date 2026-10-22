@@ -3,6 +3,48 @@ require 'spec_helper'
 describe EppXml::Session do
   let(:epp_xml) { EppXml.new(cl_trid: 'ABC-12345')}
 
+  it 'generates login xml with auto-renew and RGP added through service overrides' do
+    expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+      <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
+        <command>
+          <login>
+            <clID>user</clID>
+            <pw>pw</pw>
+            <options>
+              <version>1.0</version>
+              <lang>en</lang>
+            </options>
+            <svcs>
+              <objURI>https://epp.tld.ee/schema/domain-eis-1.0.xsd</objURI>
+              <objURI>https://epp.tld.ee/schema/contact-ee-1.1.xsd</objURI>
+              <objURI>urn:ietf:params:xml:ns:host-1.0</objURI>
+              <objURI>urn:ietf:params:xml:ns:keyrelay-1.0</objURI>
+              <svcExtension>
+                <extURI>urn:ietf:params:xml:ns:secDNS-1.1</extURI>
+                <extURI>https://epp.tld.ee/schema/eis-1.0.xsd</extURI>
+                <extURI>https://epp.tld.ee/schema/autoRenew-ee-1.0.xsd</extURI>
+                <extURI>urn:ietf:params:xml:ns:rgp-1.0</extURI>
+              </svcExtension>
+            </svcs>
+          </login>
+          <clTRID>ABC-12345</clTRID>
+        </command>
+      </epp>
+    ').to_s.squish
+
+    xml = epp_xml.session.login(svcs: {
+      svcExtension: [
+        { extURI: { value: 'urn:ietf:params:xml:ns:secDNS-1.1' } },
+        { extURI: { value: 'https://epp.tld.ee/schema/eis-1.0.xsd' } },
+        { extURI: { value: EppXml::Session::XMLNS_AUTO_RENEW } },
+        { extURI: { value: EppXml::Session::XMLNS_RGP } }
+      ]
+    })
+
+    generated = Nokogiri::XML(xml).to_s.squish
+    expect(generated).to eq(expected)
+  end
+
   it 'generates valid login xml' do
     expected = Nokogiri::XML('<?xml version="1.0" encoding="UTF-8" standalone="no"?>
       <epp xmlns="https://epp.tld.ee/schema/epp-ee-1.0.xsd">
